@@ -1,0 +1,30 @@
+cask_args appdir: "/Applications"
+tap "caskroom/cask"
+tap "thoughtbot/formulae"
+tap "neovim/neovim"
+
+brew "antigen", args: ["HEAD"]
+brew "coreutils"
+brew "fzf"
+brew "git", args: ["with-pcre", "with-blk-sha1"]
+brew "httpie"
+brew "mas"
+brew "neovim/neovim/neovim"
+brew "powerline"
+brew "rcm"
+brew "reattach-to-user-namespace"
+brew "ssh-copy-id"
+brew "the_silver_searcher"
+brew "thoughtbot/formulae/rcm"
+brew "tmux", args: ["HEAD"]
+brew "zsh"
+brew "zsh-completions"
+
+cask "betterzipql"
+cask "qlcolorcode"
+cask "qlmarkdown"
+cask "quicklook-csv"
+cask "quicklook-json"
+
+mas "Xcode", id: 497799835
+mas "Pomodoro Time Pro", id: 961632517

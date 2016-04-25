@@ -1,0 +1,197 @@
+""
+"" Vundle setup
+""
+set nocompatible " be iMproved
+filetype off " required by Vundle
+
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+" Let Vundle manage Vundle
+" required!
+Bundle 'gmarik/Vundle.vim'
+
+" My bundles
+"
+" Repos on GitHub
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-characterize'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-bundler'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'rking/ag.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mbbill/undotree'
+Plugin 'gcmt/wildfire.vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'claco/jasmine.vim'
+Plugin 'MarcWeber/vim-addon-local-vimrc'
+Plugin 'mxw/vim-jsx'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'frankier/neovim-colors-solarized-truecolor-only'
+
+call vundle#end()
+filetype plugin indent on " required by Vundle
+
+""
+"" Helpers
+""
+
+" Some file types should wrap their text (from Janus)
+function! s:setupWrapping()
+  set wrap
+  set linebreak
+  set textwidth=72
+  " set nolist
+endfunction
+
+""
+"" My config
+""
+
+let mapleader=";"
+set number " Show line numbers
+set mouse=a " Enable mouse in all modes
+set nowrap " Don't wrap lines
+set list " Highlight unwanted whitespace (listchars)
+set tabstop=8
+set shiftwidth=2
+set softtabstop=0
+set expandtab
+set smarttab
+set ignorecase
+set smartcase " Smart case sensitivity for find
+
+set backupdir^=~/.vim/_backup// " Where to put backup files.
+set directory^=~/.vim/_temp// " Where to put swap files.
+
+nnoremap <Leader><Leader> :noh<return> " Clear search highlight
+
+" Cursor shape
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+if !has("nvim")
+  if exists("$TMUX")
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
+endif
+
+""
+"" Wild settings
+""
+" Disable output and VCS files
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+" Disable archive files
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+" Ignore bundler and sass cache
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+" Ignore librarian-chef, vagrant, test-kitchen and Berkshelf cache
+set wildignore+=*/tmp/librarian/*,*/.vagrant/*,*/.kitchen/*,*/vendor/cookbooks/*
+" Ignore rails temporary asset caches
+set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*,*/tmp/assets/*
+" Disable temp and backup files
+set wildignore+=*.swp,*~,._*
+" Ignore NPM and vendor
+set wildignore+=*/vendor/*,*/node_modules/*,*/build/*,*/dist/*
+
+""
+"" Statusline
+""
+if has("statusline") && !&cp
+  set laststatus=2  " always show the status bar
+
+  " Start the status line
+  set statusline=%f\ %m\ %r
+  set statusline+=Line:%l/%L
+  set statusline+=Col:%v
+endif
+
+" Treat JSON files like JavaScript
+au BufNewFile,BufRead *.json set ft=javascript
+
+" Remember last location in file, but not for commit messages.
+" see :help last-position-jump (from Janus)
+au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+  \| exe "normal! g`\"" | endif
+
+" ctrlp.vim
+let g:ctrlp_custom_ignore = '\v[\/]doc$'
+
+" flavored-markdown-vim: Default to GitHub-flavored
+augroup markdown
+  au!
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+  au FileType markdown call s:setupWrapping()
+augroup END
+
+" indentLine
+let g:indentLine_color_term = 235
+
+" NERDTree
+map <leader>n :NERDTreeToggle<CR>
+" Open automatically on start if no files specified on command line
+autocmd vimenter * if !argc() | NERDTree | endif
+" Close vim if NERDTree is the only window left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Jump to the current buffer in NERDTree
+map <leader>r :NERDTreeFind<cr>
+
+" Solarized
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let g:solarized_italic = 1
+syntax enable
+set background=dark
+colorscheme solarized
+
+" Syntastic
+if has("statusline") && !&cp
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
+endif
+
+let g:syntastic_always_populate_loc_list=1
+"let g:syntastic_check_on_open=1
+let g:syntastic_ruby_checkers=['rubylint']
+let g:syntastic_javascript_checkers=['eslint']
+
+" Undotree
+nnoremap <leader>u :UndotreeToggle<CR>
+
+if has("persistent_undo")
+  set undodir="~/.vim/_undo/"
+  set undofile
+endif
+
+" vim-jsx
+let g:jsx_ext_required = 0
+
+" vim-instant-markdown
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+
+" vim-polyglot
+"let g:polyglot_disabled = ['javascript']
+
+" Filetypes
+au BufNewFile,BufRead *.raml set filetype=yaml

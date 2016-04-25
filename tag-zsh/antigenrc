@@ -1,0 +1,23 @@
+antigen use oh-my-zsh
+
+export ZSH_TMUX_AUTOSTART=true
+export ZSH_TMUX_AUTOCONNECT=true
+
+antigen bundle brew
+antigen bundle brew-cask
+antigen bundle bundler
+antigen bundle colored-man-pages
+antigen bundle gitfast
+antigen bundle gnu-utils
+antigen bundle history-substring-search
+antigen bundle httpie
+antigen bundle rbenv
+antigen bundle tmux
+antigen bundle vi-mode
+antigen bundle vundle
+
+antigen bundle mafredri/zsh-async
+antigen bundle sindresorhus/pure
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+antigen apply

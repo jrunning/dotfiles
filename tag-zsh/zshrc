@@ -1,0 +1,24 @@
+source $(brew --prefix)/share/antigen.zsh
+source ~/.antigenrc
+[ -f ~/.zshrc.aliases ] && source ~/.zshrc.aliases
+
+# dircolors
+eval `dircolors $HOME/.dir_colors`
+alias ls="ls --color=tty -F"
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='ag -l -g ""'
+bindkey '^P' fzf-file-widget
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# rbenv
+eval "$(rbenv init -)"
+
+# zsh help
+unalias run-help
+autoload run-help
+HELPDIR=/usr/local/share/zsh/help
