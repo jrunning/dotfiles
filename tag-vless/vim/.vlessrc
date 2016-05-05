@@ -1,0 +1,55 @@
+""
+"" Vundle setup
+""
+set nocompatible " be iMproved
+filetype off " required by Vundle
+
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+" Let Vundle manage Vundle
+" required!
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'sheerun/vim-polyglot'
+Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'frankier/neovim-colors-solarized-truecolor-only'
+
+let no_plugin_maps = 0
+Plugin 'vim-tmux-navigator'
+
+call vundle#end()
+filetype plugin indent on " required by Vundle
+
+" Never fold lines automatically
+set nofoldenable
+
+" Disable creation of backup & swap files
+set nobackup
+set noswapfile
+
+" Treat JSON files like JavaScript
+" Filetypes
+au BufNewFile,BufRead *.json set ft=javascript
+au BufNewFile,BufRead *.raml set filetype=yaml
+
+" flavored-markdown-vim: Default to GitHub-flavored
+augroup markdown
+  au!
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+  au FileType markdown call s:setupWrapping()
+augroup END
+
+" indentLine
+let g:indentLine_color_term = 235
+
+" Solarized
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let g:solarized_italic=1
+syntax enable
+set background=dark
+colorscheme solarized
+
+" vim-jsx
+let g:jsx_ext_required = 0

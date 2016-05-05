@@ -1,3 +1,7 @@
-alias vim="nvim"
-alias vi="vim"
 alias bx="bundle exec"
+alias vi="vim"
+alias vim="nvim"
+
+if [ -f "$HOME/.vim/less.sh" ]; then
+  alias less="$HOME/.vim/less.sh"
+fi
