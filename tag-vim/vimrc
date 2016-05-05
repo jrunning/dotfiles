@@ -43,6 +43,7 @@ Plugin 'MarcWeber/vim-addon-local-vimrc'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'tmux-plugins/vim-tmux'
+Plugin 'haya14busa/incsearch.vim'
 Plugin 'frankier/neovim-colors-solarized-truecolor-only'
 
 call vundle#end()
@@ -143,6 +144,22 @@ augroup markdown
   au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
   au FileType markdown call s:setupWrapping()
 augroup END
+
+" incsearch.vim
+let g:incsearch#magic = '\v' " very magic
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)  " Don't move cursor
+" Automatic nohl
+" :h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 " indentLine
 let g:indentLine_color_term = 235
