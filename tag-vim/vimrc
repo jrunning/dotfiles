@@ -40,7 +40,6 @@ Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'claco/jasmine.vim'
 Plugin 'MarcWeber/vim-addon-local-vimrc'
-Plugin 'mxw/vim-jsx'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'tmux-plugins/vim-tmux'
@@ -96,6 +95,10 @@ if !has("nvim")
   endif
 endif
 
+" Filetypes
+au BufNewFile,BufRead *.json set ft=javascript
+au BufNewFile,BufRead *.raml set filetype=yaml
+
 ""
 "" Wild settings
 ""
@@ -125,9 +128,6 @@ if has("statusline") && !&cp
   set statusline+=Line:%l/%L
   set statusline+=Col:%v
 endif
-
-" Treat JSON files like JavaScript
-au BufNewFile,BufRead *.json set ft=javascript
 
 " Remember last location in file, but not for commit messages.
 " see :help last-position-jump (from Janus)
@@ -189,9 +189,3 @@ let g:jsx_ext_required = 0
 " vim-instant-markdown
 let g:instant_markdown_slow = 1
 let g:instant_markdown_autostart = 0
-
-" vim-polyglot
-"let g:polyglot_disabled = ['javascript']
-
-" Filetypes
-au BufNewFile,BufRead *.raml set filetype=yaml
