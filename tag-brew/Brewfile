@@ -21,6 +21,7 @@ brew "zsh"
 brew "zsh-completions"
 
 cask "betterzipql"
+cask "flux"
 cask "qlcolorcode"
 cask "qlmarkdown"
 cask "quicklook-csv"
